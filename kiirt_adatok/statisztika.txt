@@ -1,0 +1,4 @@
+1. A versenyzők száma: 30
+2. A legtöbb futamot nyerő versenyző: Lewis Hamilton (103 győzelem)
+3. A legtöbb futamot teljesítő versenyző: Fernando Alonso (377 futam)
+4. Átlagosan a versenyzők által teljesített futamok száma: 187.97
