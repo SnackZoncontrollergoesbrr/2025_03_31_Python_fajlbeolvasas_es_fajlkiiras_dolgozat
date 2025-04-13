@@ -9,39 +9,39 @@ Olvasd be az f1.txt adatait, majd oldd meg az alábbi feladatokat!
 A megoldott feladatokat a kiirt_adatok nevű mappába hozd létre statisztika.txt néven!
 """
 
-adatok = []
-
-nevek_szama = 0
-
+versenyzok = []
 with open('beolvasando_adatok/f1.txt', 'r', encoding='utf-8') as forrasfajl:
     next(forrasfajl)
     for sor in forrasfajl:
-        nev, csapat, gyozelmek_szama, telj_futamok_szama = sor.strip().split(';')
-        adatok.append([nev, csapat, int(gyozelmek_szama), int(telj_futamok_szama)])
+        adatok = sor.strip().split(';')
+        nev = adatok[0]
+        csapat = adatok[1]
+        gyozelmek_szama = int(adatok[2])
+        futamok_szama = int(adatok[3])
+        versenyzok.append([nev, csapat, gyozelmek_szama, futamok_szama])
 
-for sor in adatok:
-    nevek_szama += 1
+futamos = 0
+futamos_neve = ""
+for versenyzo in versenyzok:
+    if versenyzo[3] > futamos:
+        futamos = versenyzo[3]
+        futamos_neve = versenyzo[0]
 
-legtobb_gyozelem_versenyzo = None
+nyertes_neve = ""
+nyertes_szam = 0
+for versenyzo in versenyzok:
+    if versenyzo[2] > nyertes_szam:
+        nyertes_szam = versenyzo[2]
+        nyertes_neve = versenyzo[0]
 
-legtobb_gyozelem = 0
-for versenyzo in adatok:
-    if legtobb_gyozelem < versenyzo[2]:
-        legtobb_gyozelem = versenyzo[2]
-        legtobb_gyozelem_versenyzo = versenyzo[0]
-
-legtobb_futam_versenyzo = None
-
-legtobb_futam = 0
-for versenyzo in adatok:
-    if legtobb_futam < versenyzo[3]:
-        legtobb_futam = versenyzo[3]
-        legtobb_futam_versenyzo = versenyzo[0]
-
-
+futamok_szama = []
+for futam in versenyzok:
+    futamok_szama.append(futam[3])
+atlag_futam_szam = sum(futamok_szama) / len(futamok_szama)
 
 
-print(f"A beolvasott fájlban összesen ", nevek_szama, "versenyző szerepel.")
-print(f'A legtöbb futamot nyert versenyző: {legtobb_gyozelem_versenyzo}')
-print(f"A legtöbb futamot teljesített versenyző: {legtobb_futam_versenyzo}")
-print("Az átlagos futamszám: ____")
+with open('kiirt_adatok/statisztika.txt', 'w', encoding='utf-8') as celfajl:
+     print(f"A beolvasott fájlban összesen {len(versenyzok)} versenyző szerepel.", file=celfajl)
+     print(f"A legtöbb futamot nyert versenyző: {nyertes_neve}", file = celfajl)
+     print(f"A legtöbb futamot teljesített versenyző: {futamos_neve}", file = celfajl)
+     print(f"Az átlagos futamszám: {int(atlag_futam_szam)}", file = celfajl)
